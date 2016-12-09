@@ -44,7 +44,7 @@ public class Admin {
         String methodName = null;
 
         if (this.MVCcontext == null) {
-            throw new MVCException( "The configuration fila has not been loaded into the Admin" );
+            throw new MVCException( "The configuration file has not been loaded into the Admin" );
         }
         
         try {
@@ -60,28 +60,28 @@ public class Admin {
             return method.invoke(controller, parameters);
 
         } catch (ClassNotFoundException ex) {
-            throw new MVCException("No such class with name: " + controllerInterface.getClassname());
+            throw new MVCException( "No such class with name: " + controllerInterface.getClassname() );
 
         } catch (IllegalAccessException ex) {
-            throw new MVCException("The class or method is unreachable");
+            throw new MVCException( "The class or method is not public" );
 
         } catch (IllegalArgumentException ex) {
-            throw new MVCException("The provided parameter is not a HashMap");
+            throw new MVCException( "The provided parameter is not a HashMap" );
 
         } catch (InvocationTargetException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (NoSuchMethodException ex) {
-            throw new MVCException("There is no method called " + methodName + " in class " + controllerInterface.getClassname());
+            throw new MVCException( "There is no method called " + methodName + " in class " + controllerInterface.getClassname() );
 
         } catch (SecurityException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            throw new MVCException("The class " + controllerInterface.getClassname() + " cannot be instantiated");
+            throw new MVCException( "The class " + controllerInterface.getClassname() + " cannot be instantiated" );
 
         } catch (ClassCastException ex) {
-            throw new MVCException("The class " + controllerInterface.getClassname() + " is not a controller class");
+            throw new MVCException( "The class " + controllerInterface.getClassname() + " is not a controller class" );
 
         }
 
@@ -101,7 +101,7 @@ public class Admin {
         }
 
         if (!isControllerFound) {
-            throw new MVCException("There is no such controller with id: " + controllerID);
+            throw new MVCException("There is no such controller with id " + controllerID);
         }
 
         return controllerInterface;
@@ -120,7 +120,7 @@ public class Admin {
         }
 
         if (!isServiceFound) {
-            throw new MVCException("There is no such method with id: " + serviceID
+            throw new MVCException("There is no such method with id " + serviceID
                     + " in class " + controllerInterface.getClassname());
         }
 
