@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.sql.DataSource;
+import mapping.DatabaseConnecter;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
@@ -16,7 +17,7 @@ import org.apache.commons.dbcp2.BasicDataSourceFactory;
  *
  * @author Antonio Soto
  */
-public class PoolSegmentAdmin {
+public class PoolSegmentAdmin implements DatabaseConnecter{
     
     private ArrayList<BasicDataSource> poolSegments = new ArrayList();
     private Properties poolProperties = new Properties();
@@ -124,6 +125,16 @@ public class PoolSegmentAdmin {
     public DataSource getPoolSegment( int segment ) {
         
         return poolSegments.get( segment );
+    }
+
+    @Override
+    public Connection createConnection() throws SQLException {
+        return dbConnector.getConnection(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getConnectionUrl() {
+        return dbConnector.getURL(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

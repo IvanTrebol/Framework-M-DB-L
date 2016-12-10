@@ -16,11 +16,12 @@ public class ConnectionForDatabase {
     private String HOST;
     private String USER;
     private String PASSWORD;
+    private String URL;
 
     public ConnectionForDatabase(String URL) throws FileNotFoundException, IOException {
         
         try {
-            
+            this.URL = URL;
             Properties properties = new Properties();
             properties.load(new FileInputStream(URL) );
             
@@ -35,7 +36,11 @@ public class ConnectionForDatabase {
             System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
         }
     }
-
+    
+    public String getURL(){
+        return this.URL;
+    }
+    
     public Connection getConnection() {
         return ConnectionToDataBase;
     }
