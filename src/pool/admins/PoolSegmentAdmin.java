@@ -1,5 +1,6 @@
 package pool.admins;
 
+import Database.ConnectionForDatabase;
 import pool.exceptions.ConnectionPoolException;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,13 +20,13 @@ public class PoolSegmentAdmin {
     
     private ArrayList<BasicDataSource> poolSegments = new ArrayList();
     private Properties poolProperties = new Properties();
-    private Properties databaseProperties = new Properties();
+    private ConnectionForDatabase dbConnector;
     
-    public PoolSegmentAdmin( String poolFile, String databaseFile ) throws ConnectionPoolException{
+    public PoolSegmentAdmin( String poolFile, ConnectionForDatabase dbConnector ) throws ConnectionPoolException{
         
         try {
             this.poolProperties.load(new FileInputStream( poolFile ) );
-            this.databaseProperties.load(new FileInputStream( databaseFile ));
+            this.dbConnector = dbConnector;
             
         } catch (IOException ex) {
             throw new ConnectionPoolException("Error en la lectura de los archivos de Propiedades.");
@@ -37,10 +38,10 @@ public class PoolSegmentAdmin {
         
         BasicDataSource dataSource = BasicDataSourceFactory.createDataSource( this.poolProperties );
         
-        dataSource.setDriverClassName( this.databaseProperties.getProperty("driver") );
-        dataSource.setUrl( this.databaseProperties.getProperty("url") );
-        dataSource.setUsername( this.databaseProperties.getProperty("username") );
-        dataSource.setPassword( this.databaseProperties.getProperty("password") );
+        dataSource.setDriverClassName( this.dbConnector.getDRIVER() );
+        dataSource.setUrl( this.dbConnector.getHOST() );
+        dataSource.setUsername( this.dbConnector.getUSER() );
+        dataSource.setPassword( this.dbConnector.getPASSWORD() );
         
         dataSource.setMinIdle( Integer.parseInt( this.poolProperties.getProperty("min") ) );
         dataSource.setMaxIdle( Integer.parseInt( this.poolProperties.getProperty("max") ) );
