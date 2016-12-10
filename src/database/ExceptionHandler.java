@@ -2,6 +2,7 @@
 
 package Database;
 
+import SQLExceptions.DELETEException;
 import SQLExceptions.INSERTException;
 import SQLExceptions.SELECTException;
 import SQLExceptions.UPDATEException;
@@ -12,11 +13,11 @@ public class ExceptionHandler {
     
     private static final ExceptionHandler handler = new ExceptionHandler();
     
-    public void ExceptionHandling(SQLException ex) throws SELECTException, UPDATEException, INSERTException{
+    public void ExceptionHandling(SQLException ex) throws SELECTException, UPDATEException, INSERTException, DELETEException{
         SELECTExceptionHandling(ex);
     }
     
-    private void SELECTExceptionHandling(SQLException ex) throws SELECTException, UPDATEException, INSERTException{
+    private void SELECTExceptionHandling(SQLException ex) throws SELECTException, UPDATEException, INSERTException, DELETEException{
         
         switch(ex.getErrorCode()){
             case 104:
@@ -62,7 +63,7 @@ public class ExceptionHandler {
         }
     }
     
-    private void UPDATEExceptionHandling(SQLException ex) throws UPDATEException, INSERTException{
+    private void UPDATEExceptionHandling(SQLException ex) throws UPDATEException, INSERTException, DELETEException{
         
         switch(ex.getErrorCode()){
             case 115:
@@ -103,7 +104,7 @@ public class ExceptionHandler {
         }
     }
     
-    private void INSERTExceptionHandling(SQLException ex) throws INSERTException, UPDATEException{
+    private void INSERTExceptionHandling(SQLException ex) throws INSERTException, UPDATEException, DELETEException{
         
         switch(ex.getErrorCode()){
             case 109:
@@ -164,11 +165,11 @@ public class ExceptionHandler {
         }
     }
     
-    private void DELETEExceptionHandling(SQLException ex) throws UPDATEException{
+    private void DELETEExceptionHandling(SQLException ex) throws DELETEException{
         
         switch(ex.getErrorCode()){
             case 415:
-                throw new UPDATEException();
+                throw new DELETEException();
         }
     }
 

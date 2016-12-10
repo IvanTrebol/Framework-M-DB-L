@@ -1,9 +1,12 @@
+
 package Database;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionForDatabase {
@@ -15,30 +18,34 @@ public class ConnectionForDatabase {
     private String PASSWORD;
 
     public ConnectionForDatabase(String URL) throws FileNotFoundException, IOException {
-
-        Properties properties = new Properties();
-        properties.load(new FileInputStream(URL));
-
-        this.DRIVER = properties.getProperty("DRIVER");
-        this.HOST = properties.getProperty("HOST");
-        this.USER = properties.getProperty("USER");
-        this.PASSWORD = properties.getProperty("PASSWORD");
+        
+        try {
+            
+            Properties properties = new Properties();
+            properties.load(new FileInputStream(URL) );
+            
+            this.DRIVER = properties.getProperty("DRIVER");
+            this.HOST = properties.getProperty("HOST");
+            this.USER = properties.getProperty("USER");
+            this.PASSWORD = properties.getProperty("PASSWORD");
+            Class.forName(this.DRIVER);
+            ConnectionToDataBase = DriverManager.getConnection(this.HOST, this.USER, this.PASSWORD);
+            System.out.println("WE DID IT");
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
+        }
     }
 
-    public String getDRIVER() {
-        return DRIVER;
+    public Connection getConnection() {
+        return ConnectionToDataBase;
     }
 
-    public String getHOST() {
-        return HOST;
+    public void closeConnection() {
+        try {
+            ConnectionToDataBase.close();
+        } catch (SQLException ex) {
+            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
+        }
     }
-
-    public String getUSER() {
-        return USER;
-    }
-
-    public String getPASSWORD() {
-        return PASSWORD;
-    }
-
+    
 }
