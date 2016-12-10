@@ -1,6 +1,6 @@
 
 
-package SQLExceptions;
+package database.SQLExceptions;
 
 
 public class DELETEException extends Exception {

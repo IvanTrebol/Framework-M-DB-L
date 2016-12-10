@@ -1,11 +1,11 @@
 
 
-package Database;
+package database;
 
-import SQLExceptions.DELETEException;
-import SQLExceptions.INSERTException;
+import database.SQLExceptions.DELETEException;
 import SQLExceptions.SELECTException;
-import SQLExceptions.UPDATEException;
+import database.SQLExceptions.INSERTException;
+import database.SQLExceptions.UPDATEException;
 import java.sql.SQLException;
 
 
