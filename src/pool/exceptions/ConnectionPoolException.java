@@ -1,4 +1,4 @@
-package exceptions;
+package pool.exceptions;
 
 /**
  *
