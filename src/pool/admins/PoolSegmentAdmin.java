@@ -19,27 +19,16 @@ public class PoolSegmentAdmin {
     
     private ArrayList<BasicDataSource> poolSegments = new ArrayList();
     private Properties poolProperties = new Properties();
-    private Properties databaseProperties;
+    private Properties databaseProperties = new Properties();
     
-    public PoolSegmentAdmin( String propertiesFile ){
+    public PoolSegmentAdmin( String poolFile, String databaseFile ) throws ConnectionPoolException{
         
         try {
-            this.addPropertiesFile( propertiesFile );
-            // this.databaseProperties = 
-            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    // Añade un archivo de propiedades personalizado.
-    public void addPropertiesFile( String input_File ){
-        
-        try {
-            this.poolProperties.load(new FileInputStream(input_File));
+            this.poolProperties.load(new FileInputStream( poolFile ) );
+            this.databaseProperties.load(new FileInputStream( databaseFile ));
             
         } catch (IOException ex) {
-            ex.printStackTrace();
+            throw new ConnectionPoolException("Error en la lectura de los archivos de Propiedades.");
         }
     }
     
@@ -48,10 +37,10 @@ public class PoolSegmentAdmin {
         
         BasicDataSource dataSource = BasicDataSourceFactory.createDataSource( this.poolProperties );
         
-        dataSource.setDriverClassName( this.poolProperties.getProperty("driver") );
-        dataSource.setUrl( this.poolProperties.getProperty("url") );
-        dataSource.setUsername( this.poolProperties.getProperty("username") );
-        dataSource.setPassword( this.poolProperties.getProperty("password") );
+        dataSource.setDriverClassName( this.databaseProperties.getProperty("driver") );
+        dataSource.setUrl( this.databaseProperties.getProperty("url") );
+        dataSource.setUsername( this.databaseProperties.getProperty("username") );
+        dataSource.setPassword( this.databaseProperties.getProperty("password") );
         
         dataSource.setMinIdle( Integer.parseInt( this.poolProperties.getProperty("min") ) );
         dataSource.setMaxIdle( Integer.parseInt( this.poolProperties.getProperty("max") ) );
