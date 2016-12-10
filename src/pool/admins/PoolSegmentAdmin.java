@@ -1,6 +1,6 @@
 package pool.admins;
 
-import Database.ConnectionForDatabase;
+import database.ConnectionForDatabase;
 import pool.exceptions.ConnectionPoolException;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -129,7 +129,7 @@ public class PoolSegmentAdmin implements DatabaseConnecter{
 
     @Override
     public Connection createConnection() throws SQLException {
-        return dbConnector.getConnection(); //To change body of generated methods, choose Tools | Templates.
+        return this.getConnection(0); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
