@@ -17,8 +17,7 @@ public final class PasswordManager {
         
         char[] cArray = input_NewPassword.toCharArray();
         char[] numArray = input_NewPassword.replaceAll("[^0-9]","").toCharArray();
-        
-        try{
+
         if( cArray.length == 0 ){
             throw new UnsafePasswordException("Password is not safe");
         }
@@ -29,11 +28,8 @@ public final class PasswordManager {
             throw new UnsafePasswordException("Password is not safe");
         }
             
-        }
-        catch(UnsafePasswordException ex){
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
     }
+    
     
     /**
      * This class takes the parameter input_Password, encrypts it, and returns it.
