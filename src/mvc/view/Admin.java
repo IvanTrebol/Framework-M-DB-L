@@ -69,7 +69,7 @@ public class Admin {
             throw new MVCException( "The provided parameter is not a HashMap" );
 
         } catch (InvocationTargetException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getCause().printStackTrace();
 
         } catch (NoSuchMethodException ex) {
             throw new MVCException( "There is no method called " + methodName + " in class " + controllerInterface.getClassname() );
